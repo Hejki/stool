@@ -1,0 +1,22 @@
+version: ~> 1.0
+if: type != push OR branch = master
+
+stages:
+  - name: validate
+  - name: test
+
+os: osx
+language: swift
+osx_image: xcode11.2
+
+jobs:
+  include:
+    - stage: validate
+      name: Check if Linux tests are synced
+      install: swift test --generate-linuxmain
+      script: git diff --exit-code
+
+    - stage: test
+      name: macOS / Swift 5.1.2
+      before_script: swift build -Xswiftc -warnings-as-errors
+      script: swift test --parallel
