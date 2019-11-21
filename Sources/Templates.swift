@@ -40,7 +40,7 @@ struct TemplateManager {
      */
     func install(_ location: String) throws {
         if let url = URL(string: location), url.scheme != nil {
-            print("install ", url)
+            CLI.println(error: "🤬 Download templates from url is not implemented yet!")
         } else if !location.contains("/") {
             try installDefault(name: location, quietOverwrite: false)
         } else {
@@ -57,7 +57,7 @@ struct TemplateManager {
         if force {
             try path.delete()
         } else {
-            let realyRemove = CLI.ask("Delete a template from '\(path, style: STR_FORMAT_PATH)'? ", type: Bool.self)
+            let realyRemove = CLI.ask("Delete a template from \(path, style: STR_FORMAT_PATH)? ", type: Bool.self)
 
             if realyRemove {
                 try path.delete(useTrash: true)
@@ -75,7 +75,7 @@ struct TemplateManager {
         let templateDir = templatesDirectory.appending(dirName)
 
         if templateDir.exist {
-            let overwrite = (quietOverwrite ? true : CLI.ask("Overwrite template at path '\(templateDir, style: STR_FORMAT_PATH)'? ", type: Bool.self))
+            let overwrite = (quietOverwrite ? true : CLI.ask("Overwrite template at path \(templateDir, style: STR_FORMAT_PATH)? ", type: Bool.self))
 
             if overwrite {
                 try templateDir.delete(useTrash: true)
@@ -111,7 +111,7 @@ struct TemplateManager {
         try toolTestDir.touch("{{target}}Tests.swift").write(text: DefaultTemplate.exampleTest)
 
         if dirName != nil {
-            CLI.println("👏 Default \(STR_STOOL) template was placed to '\(templateDir, style: STR_FORMAT_PATH)'. You can change it as you like.")
+            CLI.println("👏 Default \(STR_STOOL) template was placed to \(templateDir, style: STR_FORMAT_PATH). You can change it as you like.")
         }
     }
 

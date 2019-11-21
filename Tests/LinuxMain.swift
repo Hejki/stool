@@ -1,5 +1,3 @@
-// Copyright (c) 2019 TeepCo
-
 import XCTest
 
 import SToolTests

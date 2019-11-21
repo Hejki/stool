@@ -36,11 +36,11 @@ let config: MainConfig
 do {
     config = try MainConfig.load(MAIN_CONFIG_PATH)
 } catch let SToolError.configNotExist(path) {
-    CLI.println(error: "💩 The config file '\(path, style: STR_FORMAT_PATH)' does not exist.")
+    CLI.println(error: "The config file \(path, style: STR_FORMAT_PATH) does not exist.")
     config = SToolMainConfigInit(path).run()
 } catch let SToolError.configDecodeError(path, error) {
     CLI.println(error: """
-    💩 Cannot read config file '\(path, style: STR_FORMAT_PATH)'.
+    💩 Cannot read config file \(path, style: STR_FORMAT_PATH)
     Error: \(error.localizedDescription, style: .bright(.fgRed))
     """)
     exit(2)
@@ -68,8 +68,8 @@ let app = Group { mainGroup in
 
         templateGroup.command(
             "add",
-            Argument("url or name", description: "The url of the template resource or a name for copy the default template."),
-            description: "Download a new template from the url or copy the default one with a new name.",
+            Argument("name", description: "A name for copy the default template."),
+            description: "Copy the default template with a new name.",
             TemplateManager().install
         )
 
@@ -83,7 +83,7 @@ let app = Group { mainGroup in
 
         templateGroup.command(
             "default",
-            description: "Copy a default template to the templates directory.",
+            description: "Copy the default template to the templates directory.",
             TemplateManager().installDefault
         )
 

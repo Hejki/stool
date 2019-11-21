@@ -59,21 +59,12 @@ struct MainConfig: SToolConfig, Encodable {
 
 /// Concrete tool config `.stool.yml` define info for `install` action
 struct ToolConfig: SToolConfig {
-    let product: String?
     let install_path: String?
     let build_config: String
-    let products: [Product]?
 
     init() {
-        product = ""
         install_path = nil
         build_config = "release"
-        products = nil
-    }
-
-    struct Product: Decodable {
-        let name: String
-        let install_path: String?
     }
 }
 
@@ -104,11 +95,7 @@ class SToolMainConfigInit {
             showConfirmation()
         }
 
-        CLI.println("\n🖖 \(STR_STOOL) configured successfully.")
-        CLI.println("Use \("stool init toolName", style: .bold, .fgGreen) to create a new tool.")
-        CLI.println("Use \("stool install", style: .bold, .fgGreen) to build and install tool in current directory.")
-        CLI.println("Use \("stool templates", style: .bold, .fgGreen) for manage project templates.")
-        CLI.println("")
+        CLI.println("\n🖖 \(STR_STOOL) configured successfully.\n")
         return config!
     }
 
@@ -152,7 +139,7 @@ class SToolMainConfigInit {
             CLI.println("  use_swiftenv:    \(swiftFormat, style: .fgBlue)")
         }
         CLI.println("  build_config:    \(variables["build_config"], style: .fgBlue)")
-        CLI.println("  use_tests:       \(variables["build_config"], style: .fgBlue)")
+        CLI.println("  use_tests:       \(variables["use_tests"], style: .fgBlue)")
 
         if CLI.ask("Is this ok? ") {
             self.config = MainConfig(tools_directory: toolsDirPath, variables: variables.mapValues { AnyCodable($0) })

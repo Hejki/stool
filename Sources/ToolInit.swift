@@ -89,7 +89,7 @@ private struct ToolCreator {
             try customize(path: $0, templateContext)
         }
 
-        CLI.println("🙌 Tool \(basename, style: .bright(.fgGreen)) was created at \(toolPath, style: .faint).")
+        CLI.println("🙌 Tool \(basename, style: .fgGreen, .bold) was created at \(toolPath, style: .faint)")
 
         if !quiet {
             #if os(macOS)
@@ -151,7 +151,7 @@ private struct ToolCreator {
         } else if let stoolRoot = config.tools_directory {
             // tools root path is defined, write tool dir to this path
             if toolName == nil, quiet {
-                print("Tool name must be specified if tools_directory is defined in global config. Add argument with tool name for `init` command.")
+                print("💩 Tool name must be specified if tools_directory is defined in global config. Add argument with tool name for `init` command.")
                 throw ArgumentError.missingValue(argument: "name")
             }
 
@@ -178,12 +178,12 @@ private struct ToolCreator {
         let path = CLI.ask("Tool directory [\(toolPath)]: ", options: .default(toolPath))
         if path.exist {
             if quiet {
-                CLI.println(error: "💩 Tool directory '\(path, style: STR_FORMAT_PATH)' is already exist.")
+                CLI.println(error: "💩 Tool directory \(path, style: STR_FORMAT_PATH) is already exist.")
                 abort()
             }
 
             let remove = CLI.ask(
-                "😮 Tool directory '\(path, style: STR_FORMAT_PATH)' already exist. Do you want to delete it? ",
+                "😮 Tool directory \(path, style: STR_FORMAT_PATH) already exist. Do you want to delete it? ",
                 type: Bool.self
             )
             if remove {
