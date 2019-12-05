@@ -176,7 +176,7 @@ private struct ToolCreator {
         }
 
         let path = CLI.ask("Tool directory [\(toolPath)]: ", options: .default(toolPath))
-        if path.exist {
+        if path.exist && !path.children.isEmpty {
             if quiet {
                 CLI.println(error: "💩 Tool directory \(path, style: STR_FORMAT_PATH) is already exist.")
                 abort()

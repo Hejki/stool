@@ -74,7 +74,7 @@ struct TemplateManager {
     func installDefault(name dirName: String?, quietOverwrite: Bool) throws {
         let templateDir = templatesDirectory.appending(dirName)
 
-        if templateDir.exist {
+        if templateDir.exist && !templateDir.children.isEmpty {
             let overwrite = (quietOverwrite ? true : CLI.ask("Overwrite template at path \(templateDir, style: STR_FORMAT_PATH)? ", type: Bool.self))
 
             if overwrite {
